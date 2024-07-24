@@ -1,5 +1,6 @@
 class Product < ApplicationRecord
-  belongs_to :category
+  belongs_to :sub_category
+  # belongs_to :category
   belongs_to :user
   has_many :bookings, dependent: :destroy
   has_one_attached :cover_image
@@ -9,8 +10,14 @@ class Product < ApplicationRecord
   validates :cover_image, presence: true
 
   def self.ransackable_attributes(auth_object = nil)
-    ["category_id", "cover_image", "created_at", "description", "id", "id_value", "name", "price", "quantity", "remaining_products", "updated_at", "user_id"]
+    ["category_id", "cover_image", "created_at", "description", "id", "name", "price", "quantity", "remaining_products", "sub_category_id", "updated_at", "user_id"]
   end
+
+  
+  def self.ransackable_associations(auth_object = nil)
+    ["bookings", "cover_image_attachment", "cover_image_blob", "sub_category", "user"]
+  end
+
 end
 
 

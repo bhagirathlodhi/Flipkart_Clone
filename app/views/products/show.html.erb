@@ -1,3 +1,5 @@
+
+
 <div class="container">
   <div class="card shadow border border-0" style="width: 70rem; height: 40rem;">
     <div class="card shadow border border-0 mt-4">
@@ -15,9 +17,10 @@
             <div class="d-flex flex-column align-items-center justify-content-center">
             
                 <%= form_with(url: "/bookings", model: @booking, method: :post, data: {turbo: false}) do |form| %>
-                  <%=link_to "Back", category_products_path ,class:"btn btn-primary mt-3"%>
+                  <%=link_to "Back", category_sub_category_products_path(@product.sub_category.category_id, @product.sub_category_id) ,class:"btn btn-primary mt-3"%>
                   <% if user_signed_in? && current_user.seller? %>
-                  <%= link_to "Update Details", edit_category_product_path(@product.category_id, @product) ,class:"btn btn-outline-success mt-3"%>
+                    <%= link_to "Update Details", edit_category_sub_category_product_path(@product.sub_category.category_id, @product.sub_category_id, @product) ,class:"btn btn-outline-success mt-3"%>
+                    <%= link_to "Delete", category_sub_category_product_path(@product.sub_category.category_id, @product.sub_category_id, @product), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger mt-3" %>
                   <% elsif user_signed_in? && current_user.customer? %>
                     <%= form.hidden_field :product_id, value: @product.id %>
                     <%= form.label :product_count, class:"form-outline text-center" %>

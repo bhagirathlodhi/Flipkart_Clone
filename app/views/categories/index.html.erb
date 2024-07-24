@@ -10,7 +10,7 @@
             <% end %>
             <div card="card-body">
               <div class="text-center mt-1"><h4 class="card-title"><i><%= category.name%></i></h4></div>
-                <center><%= link_to "View products", category_products_path(category), class:"btn btn-outline-success mb-1 mt-2"%></center>
+                <center><%= link_to "View products", category_sub_categories_path(category), class:"btn btn-outline-success mb-1 mt-2"%></center>
               </div>
             </div>
         </div>
@@ -19,5 +19,8 @@
     <% if user_signed_in? && current_user.seller? %>
       <%= link_to "Add new category", new_category_path, class:"btn btn-secondary mt-4" %>
     <% end %>
+    <ul class="pagination justify-content-center mt-3">
+        <%= paginate @categories %>
+    </ul>
   </div>
 </div>

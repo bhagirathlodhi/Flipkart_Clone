@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="col-md-16 mx-3">
+    <h1 class=" mb-4 text-center"><span class="badge rounded-pill bg-dark">CATEGORIES</span></h1>
+    <div class="row ms-2">
+      <% @sub_categories.each do |sub_category| %>
+        <div class="card shadow me-1 mt-2" style="width: 17rem; height: 18rem;">
+          <div class="my-auto mb-5 mx-auto">
+            <% if sub_category.images.attached? %>
+              <center>
+                <%= image_tag url_for(sub_category.images.first), class: "card-img-top mt-2", height: 170, width: 110 %>
+              </center>
+            <% end %>
+            <div class="card-body">
+              <div class="text-center mt-1">
+                <h4 class="card-title"><i><%= sub_category.title %></i></h4>
+              </div>
+              <center>
+                <%= link_to "View products", category_sub_category_products_path(@category, sub_category), class: "btn btn-outline-success mb-1 mt-2" %>
+              </center>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <% if user_signed_in? && current_user.seller? %>
+      <%= link_to "Add new sub category", new_category_sub_category_path(@category), class: "btn btn-secondary mt-4" %>
+    <% end %>
+  </div>
+</div>

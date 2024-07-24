@@ -1,24 +1,28 @@
 class ProductsController < ApplicationController
   def index
-    @category = Category.find(params[:category_id])
+    @sub_category = SubCategory.find(params[:sub_category_id])
     if user_signed_in? && current_user.seller? 
-      @products = current_user.products.where(category: @category)
+      @products = current_user.products.where(sub_category: @sub_category)
     else
-      @products = @category.products.all
+      @q = Product.ransack(params[:q])
+
+      @products = @q.result(distinct: true)
     end
 
   end
 
   def new
+    @sub_category = SubCategory.find(params[:sub_category_id])
     @product = Product.new
   end
 
   def create
+    @sub_category = SubCategory.find(params[:sub_category_id])
     @product = current_user.products.new(product_params)
-    @product.category_id = params[:category_id]
+    @product.sub_category = @sub_category
     if @product.save
-      redirect_to category_products_path
-      flash[:success] = 'Product Lounched successfully .'
+      redirect_to category_sub_category_products_path(@sub_category.category, @sub_category)
+      flash[:success] = 'Product launched successfully.'
     else
       render :new
     end
@@ -31,7 +35,7 @@ class ProductsController < ApplicationController
   def update
     @product = Product.find(params[:id])
     if @product.update(product_params)
-      redirect_to category_product_path(@product)
+      redirect_to category_sub_category_products_path(@product)
       flash[:success] = 'product Updated successfully .'
     else
       render :edit, status: :unprocessable_entity
@@ -41,6 +45,12 @@ class ProductsController < ApplicationController
 
   def show
     @product = Product.find(params[:id])
+  end
+
+  def destroy
+    @product = Product.find(params[:id])
+    @product.destroy
+    redirect_to category_sub_category_products_path(@sub_category.category, @sub_category)
   end
 
   private

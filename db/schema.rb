@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_24_044916) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_24_092018) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -91,12 +91,25 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_24_044916) do
     t.text "description"
     t.integer "quantity"
     t.integer "remaining_products"
-    t.integer "category_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"
+    t.integer "sub_category_id"
+    t.integer "category_id"
     t.index ["category_id"], name: "index_products_on_category_id"
+    t.index ["sub_category_id"], name: "index_products_on_sub_category_id"
     t.index ["user_id"], name: "index_products_on_user_id"
+  end
+
+  create_table "sub_categories", force: :cascade do |t|
+    t.string "title"
+    t.integer "category_id", null: false
+    t.integer "user_id", null: false
+    t.string "images"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_sub_categories_on_category_id"
+    t.index ["user_id"], name: "index_sub_categories_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -118,4 +131,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_24_044916) do
   add_foreign_key "bookings", "products"
   add_foreign_key "bookings", "users"
   add_foreign_key "products", "categories"
+  add_foreign_key "products", "sub_categories"
+  add_foreign_key "sub_categories", "categories"
+  add_foreign_key "sub_categories", "users"
 end

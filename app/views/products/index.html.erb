@@ -1,18 +1,18 @@
 <div class="row mt-3 mx-3" >
   <div class="col-lg-12 category_show">
-    <h1 class="mt-4"><span class="badge rounded-pill bg-success"><%= @category.name%> Products</h1>
+    <h1 class="mt-4"><span class="badge rounded-pill bg-success"><%= @sub_category.title%> Products</h1>
     <div class="row mt-3">
       <% @products.each do |product| %>
-        <div class="card shadow me-2 mb-2" style="width: 15rem; height: 24rem; ">
-          <div class="my-auto mx-auto ">
+        <div class="card shadow me-1 mt-2" style="width: 17rem; height: 18rem; ">
+          <div class="my-auto mx-auto mt-2 ">
             <% if product.cover_image.attached? %>
-              <center><%= image_tag product.cover_image, height:200, width:150 %></center>
+              <center><%= image_tag product.cover_image, height:170, width:110 %></center>
             <% end %>
             <div card="card-body">
                 <center><strong class="card-title ms-3 mt-3"><%= product.name %></strong></center>
                 <center><strong class="badge rounded-pill bg-dark ">Price: <%= product.price %></strong></center>
               <div>
-                <center><%= link_to "View Details", category_product_path(product.category_id, product) ,class:"btn btn-outline-success mt-3"%><center>
+                  <%= link_to "View Details", category_sub_category_product_path(product.sub_category.category_id, product.sub_category_id, product.id), class: "btn btn-outline-success mt-3" %>
               </div>
             </div>
           </div>
@@ -25,7 +25,7 @@
   <div class="row mt-5">
     <div class="col-md-3 ms-auto">
       <% if user_signed_in? && current_user.seller? %>
-        <%= link_to "create new product", new_category_product_path(@category), class:"btn btn-outline-dark" %>
+        <%= link_to "create new product", new_category_sub_category_product_path(@sub_category), class:"btn btn-outline-dark" %>
         <%= link_to "Back", root_path , class:"btn btn-outline-dark"%>
       <% else %>
         <%= link_to "Back", root_path , class:"btn btn-outline-dark"%>

@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="col-md-4 mx-auto my-auto">
+    <%= form_with model: [@category, @sub_category] do |form| %>
+      <div>
+        <%= form.label :title %><br>
+        <%= form.text_field :title, class:"form-control" %>
+      </div>
+
+      <div>
+        <%= form.label :images %><br>
+        <%= form.file_field :images, class:"form-control" %>
+      </div>
+
+      <div>
+        <%= form.submit class:"btn btn-success mt-4" %>
+      </div>
+    <% end %>
+  </div>
+</div>

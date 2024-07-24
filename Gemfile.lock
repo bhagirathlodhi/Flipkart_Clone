@@ -262,7 +262,7 @@ GEM
       thor (~> 1.0, >= 1.2.2)
       zeitwerk (~> 2.6)
     rake (13.1.0)
-    ransack (4.0.0)
+    ransack (4.2.0)
       activerecord (>= 6.1.5)
       activesupport (>= 6.1.5)
       i18n
@@ -377,9 +377,11 @@ DEPENDENCIES
   image_processing (~> 1.12, >= 1.12.2)
   jbuilder
   jsbundling-rails
+  kaminari (~> 1.2, >= 1.2.2)
   letter_opener_web
   puma (>= 5.0)
   rails (~> 7.1.2)
+  ransack (~> 4.2)
   redis (>= 4.0.1)
   rspec-rails (~> 6.1.0)
   sass-rails
