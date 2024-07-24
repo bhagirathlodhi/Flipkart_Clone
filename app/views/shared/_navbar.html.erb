@@ -1,0 +1,49 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mt-0">
+  <div class="container">
+    <a class="navbar-brand" href="<%= root_path%>"><img src="https://static-assets-web.flixcart.com/batman-returns/batman-returns/p/images/fkheaderlogo_exploreplus-44005d.svg" width="160" height="40" title="Flipkart"></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <% if user_signed_in? &&  current_user.seller? || user_signed_in? && current_user.admin? %>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="<%= root_path%>"><i class="bi bi-house-door"></i></a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-person"></i><%= current_user.name %>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li><%= button_to "Log Out", destroy_user_session_path, class: "dropdown-item", method: :delete %></li>
+              <li><a class="dropdown-item" href="<%= edit_user_registration_path %>">Update profile</a></li>
+            </ul>
+          </li>
+        <% elsif user_signed_in? && current_user.customer? %>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="<%= root_path%>"><i class="bi bi-house-door"></i></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="<%= my_bookings_path%>">my bookings</i></a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-person"></i><%= current_user.name %>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li><%= button_to "Log Out", destroy_user_session_path, class: "dropdown-item", method: :delete %></li>
+              <li><a class="dropdown-item" href="<%= edit_user_registration_path %>">Update profile</a></li>
+            </ul>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <a class="nav-link active" href="<%= new_user_session_path %>">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="<%= new_user_registration_path %>">Signup</a>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</nav>

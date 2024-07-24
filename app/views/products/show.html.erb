@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="card shadow border border-0" style="width: 70rem; height: 40rem;">
+    <div class="card shadow border border-0 mt-4">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="mt-2 zoom"><%= image_tag @product.cover_image, height:558, width:470 %></div>
+        </div>
+          <div class="col-md-6">
+            <div class="card-body ">
+              <h4 class="card-title bg-dark text-light text-center"><%= @product.name %></h4>
+              <h5 class="card-title">price: <%= @product.price %></h5>
+              <p class="card-text"><strong>Description: </strong> <%= @product.description %></p>
+            </div>
+            
+            <div class="d-flex flex-column align-items-center justify-content-center">
+            
+                <%= form_with(url: "/bookings", model: @booking, method: :post, data: {turbo: false}) do |form| %>
+                  <%=link_to "Back", category_products_path ,class:"btn btn-primary mt-3"%>
+                  <% if user_signed_in? && current_user.seller? %>
+                  <%= link_to "Update Details", edit_category_product_path(@product.category_id, @product) ,class:"btn btn-outline-success mt-3"%>
+                  <% elsif user_signed_in? && current_user.customer? %>
+                    <%= form.hidden_field :product_id, value: @product.id %>
+                    <%= form.label :product_count, class:"form-outline text-center" %>
+                    <%= form.number_field :no_of_product, min: 1, required: true, class:"form-cntrol" %>
+                    <%= form.submit "Buy Now", class: "btn btn-outline-danger btn-lg btn-block mt-3" %>
+                  <% elsif user_signed_in? && current_user.admin? %>
+                  
+                  <% else %>
+                    <%= form.hidden_field :product_id, value: @product.id %>
+                    <%= form.label :product_count, class:"form-outline text-center" %>
+                    <%= form.number_field :no_of_product, min: 1, required: true, class:"form-cntrol" %>
+                    <%= form.submit "Buy Now", class: "btn btn-outline-danger btn-lg btn-block mt-3" %>
+                  <% end %>
+                <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

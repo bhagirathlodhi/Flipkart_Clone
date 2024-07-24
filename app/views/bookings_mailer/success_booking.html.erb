@@ -1,0 +1,32 @@
+<div class="col-lg-10 mx-auto">
+  <div class="card-shadow">
+    <div class="card-header">
+      <h4 class="card-title">Booking Confirmation </h4>
+    </div>
+    <div class="card-body">
+      <h2>Greeting from Flipkart</h2>
+      <h2> hello </h2>
+
+      <p class="lead"> Your booking for <strong>
+        <%= @product.name %> has been confirmed please find the details below
+        </strong>
+
+      <div class="card shadow border border-0" style="width: 70rem; height: 40rem;">
+        <div class="card shadow border border-0 mt-4">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mt-2 zoom"><%= image_tag @product.cover_image, height:558, width:470 %></div>
+            </div>
+              <div class="col-md-6">
+                <div class="card-body ">
+                  <h5 class="card-title">price: <%= @product.price %></h5>
+                  <p class="card-text"><strong>Description: </strong> <%= @product.description %></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
