@@ -12,12 +12,14 @@ class SubCategoriesController < ApplicationController
   def create
     @user = current_user
     @sub_category = @category.sub_categories.build(sub_category_params.merge(user_id: @user.id))
+  
     if @sub_category.save
       redirect_to category_sub_categories_path(@category), notice: 'SubCategory was successfully created.'
     else
       render :new
     end
   end
+  
 
   private
 

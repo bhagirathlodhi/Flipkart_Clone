@@ -86,3 +86,10 @@ end
 
 gem "devise", "~> 4.9"
 gem 'faker'
+
+gem "searchkick", "~> 5.3"
+gem "elasticsearch", "~> 8.14"
+# gem "searchkick"
+
+# gem "elasticsearch"   # select one
+# gem "opensearch-ruby" # select one

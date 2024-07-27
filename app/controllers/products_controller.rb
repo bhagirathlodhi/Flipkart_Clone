@@ -1,12 +1,12 @@
 class ProductsController < ApplicationController
+    before_action :set_product, only: [:show, :edit, :update, :destroy]
   def index
     @sub_category = SubCategory.find(params[:sub_category_id])
     if user_signed_in? && current_user.seller? 
       @products = current_user.products.where(sub_category: @sub_category)
     else
-      @q = Product.ransack(params[:q])
+      @products = Product.all
 
-      @products = @q.result(distinct: true)
     end
 
   end
@@ -17,23 +17,27 @@ class ProductsController < ApplicationController
   end
 
   def create
+    debugger
     @sub_category = SubCategory.find(params[:sub_category_id])
+    @category = Category.find(params[:category_id])
+  
     @product = current_user.products.new(product_params)
     @product.sub_category = @sub_category
+    @product.category = @category
+    
     if @product.save
-      redirect_to category_sub_category_products_path(@sub_category.category, @sub_category)
-      flash[:success] = 'Product launched successfully.'
+      redirect_to category_sub_category_products_path(@sub_category.category, @sub_category), notice: 'Product launched successfully.'
     else
       render :new
     end
   end
+  
 
   def edit
-    @product = Product.find(params[:id])
   end
 
   def update
-    @product = Product.find(params[:id])
+    
     if @product.update(product_params)
       redirect_to category_sub_category_products_path(@product)
       flash[:success] = 'product Updated successfully .'
@@ -44,16 +48,18 @@ class ProductsController < ApplicationController
   end
 
   def show
-    @product = Product.find(params[:id])
   end
 
   def destroy
-    @product = Product.find(params[:id])
     @product.destroy
     redirect_to category_sub_category_products_path(@sub_category.category, @sub_category)
   end
 
   private
+
+  def set_product 
+    @product = Product.find(params[:id])
+  end
 
   def product_params
     params.require(:product).permit(:name, :price, :cover_image, :description, :quantity)

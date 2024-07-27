@@ -1,22 +1,34 @@
 class Product < ApplicationRecord
+  searchkick word_start: [:name]
   belongs_to :sub_category
-  # belongs_to :category
+  belongs_to :category
   belongs_to :user
   has_many :bookings, dependent: :destroy
   has_one_attached :cover_image
+  
 
   validates :name, presence: true
   validates :price, presence: true
   validates :cover_image, presence: true
-
-  def self.ransackable_attributes(auth_object = nil)
-    ["category_id", "cover_image", "created_at", "description", "id", "name", "price", "quantity", "remaining_products", "sub_category_id", "updated_at", "user_id"]
-  end
-
   
-  def self.ransackable_associations(auth_object = nil)
-    ["bookings", "cover_image_attachment", "cover_image_blob", "sub_category", "user"]
+
+  after_save :reindex_product
+
+  def search_data
+    {
+      name: name,
+      price: price,
+      sub_category_id: sub_category.id,
+      category_id: sub_category.category_id # Assuming sub_category belongs_to category
+    }
   end
+
+  private
+
+  def reindex_product
+    reindex
+  end
+  
 
 end
 

@@ -1,18 +1,18 @@
 <div class="row">
-  <div class="col-md-4 mx-auto my-auto">
-    <%= form_with model: [@category, @sub_category] do |form| %>
-      <div>
-        <%= form.label :title %><br>
-        <%= form.text_field :title, class:"form-control" %>
+  <div class="col-md-6 mx-auto my-auto">
+    <%= form_with model: [@category, @sub_category], local: true do |form| %>
+      <div class="form-group">
+        <%= form.label :title %>
+        <%= form.text_field :title, class: "form-control" %>
       </div>
 
-      <div>
-        <%= form.label :images %><br>
-        <%= form.file_field :images, class:"form-control" %>
+      <div class="form-group">
+        <%= form.label :images %>
+        <%= form.file_field :images, multiple: true, class: "form-control" %>
       </div>
 
-      <div>
-        <%= form.submit class:"btn btn-success mt-4" %>
+      <div class="form-group">
+        <%= form.submit 'Create SubCategory', class: "btn btn-success mt-4" %>
       </div>
     <% end %>
   </div>

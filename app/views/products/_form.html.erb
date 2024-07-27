@@ -1,8 +1,12 @@
 <div class="row">
   <div class="col-md-5 mx-auto">
     <div>
-      <%= form_with(model: @product, url: category_sub_category_products_path) do |form| %>
+      <%= form_with(model: @product, url: category_sub_category_products_path(@sub_category.category, @sub_category), local: true) do |form| %>
         <%= render 'shared/error_messages', object: form.object %>
+        
+        <%= form.hidden_field :category_id, value: @sub_category.category_id %>
+        <%= form.hidden_field :sub_category_id, value: @sub_category.id %>
+
         <div class="field mt-3">
           <%= form.label :name %><br>
           <%= form.text_field :name, class:"form-control" %>
@@ -27,7 +31,6 @@
           <%= form.label :availability %>
           <%= form.check_box :availability, as: :boolean, label: "availability", class:"ms-3 mt-3 mb-3 " %>
         </div>
-
 
         <div class="field">
           <%= form.label :rating %>
